@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - <%= user.username %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h1>Profile: <%= user.username %></h1>
+    <img src="<%= user.profile_picture_url %>" alt="<%= user.username %>">
+    <p>Email: <%= user.email %></p>
+    <p>Bio: <%= user.bio %></p>
+
+    <h2>Your Nail Art Designs</h2>
+    <ul>
+      <% nailArtStyles.forEach(style => { %>
+        <li>
+          <h3><%= style.title %></h3>
+          <p><%= style.description %></p>
+          <a href="/edit/<%= style._id %>">Edit</a>
+          <form action="/delete/<%= style._id %>" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+
+    <h2>Add a New Design</h2>
+    <form action="/add" method="POST">
+      <label for="title">Title: </label>
+      <input type="text" name="title" id="title" required>
+      <label for="description">Description: </label>
+      <textarea name="description" id="description"></textarea>
+      <label for="image_url">Image URL: </label>
+      <input type="url" name="image_url" id="image_url" required>
+      <label for="category">Category: </label>
+      <select name="category" id="category">
+        <option value="Regular nail polish">Regular nail polish</option>
+        <option value="gel polish">gel polish</option>
+        <option value="Acrylic Nails">Acrylic Nails</option>
+        <option value="dipping powder">dipping powder</option>
+      </select>
+      <button type="submit">Add</button>
+    </form>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

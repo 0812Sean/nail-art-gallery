@@ -6,9 +6,9 @@ const nailArtStyleSchema = new mongoose.Schema({
     required: true 
 },
   description: String,
-  image_url: String,
-  category: String,
-  user: String,
+  image_url: { type: String, required: true },
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 module.exports = mongoose.model('NailArtStyle', nailArtStyleSchema);

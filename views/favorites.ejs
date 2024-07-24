@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorites - Nail Art Gallery</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h1>Favorites</h1>
+    <ul>
+      <% favorites.forEach(favorite => { %>
+        <li>
+          <%= favorite.user.username %> favorited <%= favorite.nail_art_style.title %>
+          <form action="/favorites/<%= favorite._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+
+    <h2>Add a New Favorite</h2>
+    <form action="/favorites" method="POST">
+      <label for="nail_art_style">Nail Art Style: </label>
+      <select name="nail_art_style" id="nail_art_style">
+        <% nailArtStyles.forEach(style => { %>
+          <option value="<%= style._id %>"><%= style.title %></option>
+        <% }) %>
+      </select>
+      <button type="submit">Add Favorite</button>
+    </form>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

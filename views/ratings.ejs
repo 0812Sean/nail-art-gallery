@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ratings - Nail Art Gallery</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('../partials/header', { user: user }) %>
+  <main>
+    <h1>Ratings</h1>
+    <ul>
+      <% ratings.forEach(rating => { %>
+        <li>
+          <%= rating.user.username %> rated <%= rating.nail_art_style.title %> with a score of <%= rating.score %>
+          <form action="/ratings/<%= rating._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+
+    <h2>Add a New Rating</h2>
+    <form action="/ratings" method="POST">
+      <label for="nail_art_style">Nail Art Style: </label>
+      <select name="nail_art_style" id="nail_art_style">
+        <% nailArtStyles.forEach(style => { %>
+          <option value="<%= style._id %>"><%= style.title %></option>
+        <% }) %>
+      </select>
+      <label for="score">Score: </label>
+      <input type="number" name="score" id="score" min="1" max="5" required>
+      <button type="submit">Add Rating</button>
+    </form>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

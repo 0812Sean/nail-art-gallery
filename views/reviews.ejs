@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews - Nail Art Gallery</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('../partials/header', { user: user }) %>
+
+  <main>
+    <h1>Reviews</h1>
+    <ul>
+      <% reviews.forEach(review => { %>
+        <li>
+          <%= review.user.username %> reviewed <%= review.nail_art_style.title %>: <%= review.comment %>
+          <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+
+    <h2>Add a New Review</h2>
+    <form action="/reviews" method="POST">
+      <label for="nail_art_style">Nail Art Style: </label>
+      <select name="nail_art_style" id="nail_art_style">
+        <% nailArtStyles.forEach(style => { %>
+          <option value="<%= style._id %>"><%= style.title %></option>
+        <% }) %>
+      </select>
+      <label for="comment">Comment: </label>
+      <textarea name="comment" id="comment" required></textarea>
+      <button type="submit">Add Review</button>
+    </form>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

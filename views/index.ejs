@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home - Nail Art Gallery</title>
+  <title>Home - Nail Art Gallery</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <h1>Welcome to Nail Art Gallery</h1>
-  <p>Discover beautiful nail art designs and share your own creations.</p>
-  <a href="/register">Register</a>
-  <a href="/login">Login</a>
+  <%- include('../partials/header') %>
+  <main>
+    <h1>Welcome to Nail Art Gallery</h1>
+    <p>Discover beautiful nail art designs and share your own creations.</p>
+    <a href="/gallery">Browse Gallery</a>
+  </main>
+
+  <%- include('../partials/footer') %>
 </body>
 </html>
+

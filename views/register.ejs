@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - Nail Art Gallery</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <%- include('../partials/header', { user: user }) %>
+  <main>
     <h1>Register</h1>
-    <form action="/views/register.ejs" method="POST">
+    <form action="/register" method="POST">
       <label for="username">Username: </label>
       <input type="text" name="username" id="username" required>
       <label for="email">Email: </label>
@@ -20,5 +23,7 @@
       <input type="url" name="profile_picture_url" id="profile_picture_url">
       <button type="submit">Register</button>
     </form>
+  </main>
+  <%- include('../partials/footer') %>
 </body>
 </html>
