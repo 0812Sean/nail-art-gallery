@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= design.title %></title>
+</head>
+<body>
+<%- include('../partials/header') %>
+
+<div class="container">
+  <h1><%= design.title %></h1>
+  <p><%= design.description %></p>
+  <p>Category: <%= design.category %></p>
+  <img src="<%= design.image %>" alt="<%= design.title %>">
+  <p>By: <a href="/users/<%= design.author._id %>"><%= design.author.username %></a></p>
+  
+  <div class="button-group">
+    <% if (currentUser && currentUser == design.author._id.toString()) { %>
+      <form action="/designs/<%= design._id %>/edit" method="GET" style="display: inline;">
+        <button type="submit">Edit</button>
+      </form>
+      <form action="/designs/<%= design._id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    <% } %>
+    <form action="/" method="GET" style="display: inline;">
+      <button type="submit">Back</button>
+    </form>
+  </div>
+
+  <h2>Comments</h2>
+  <ul>
+    <% design.comments.forEach(comment => { %>
+      <li>
+        <p><%= comment.text %></p>
+        <p>By: <a href="/users/<%= comment.author._id %>"><%= comment.author.username %></a></p>
+        <div class="button-group">
+            <% if (currentUser && currentUser == comment.author._id.toString()) { %>
+          <form action="/designs/<%= design._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+        <% } %>  
+    </li>
+    <% }) %>
+  </ul>
+
+  <% if (currentUser) { %>
+    <form action="/designs/<%= design._id %>/comments" method="POST">
+      <textarea name="comment[text]" placeholder="Add a comment" required></textarea>
+      <button type="submit">Post Comment</button>
+    </form>
+  <% } else { %>
+    <p>You must be <a href="/users/login">logged in</a> to post a comment.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>
+
+</body>
+</html>

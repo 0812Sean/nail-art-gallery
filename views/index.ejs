@@ -2,19 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Nail Art Gallery</title>
-  <link rel="stylesheet" href="/styles.css">
+  <title>Nail Art Gallery</title>
 </head>
 <body>
-  <%- include('../partials/header') %>
-  <main>
-    <h1>Welcome to Nail Art Gallery</h1>
-    <p>Discover beautiful nail art designs and share your own creations.</p>
-    <a href="/gallery">Browse Gallery</a>
-  </main>
+<%- include('partials/header') %>
 
-  <%- include('../partials/footer') %>
+<div class="container">
+  <h2>Filter by Category</h2>
+  <ul>
+    <li><a href="/designs/category/gel">Gel</a></li>
+    <li><a href="/designs/category/acrylic">Acrylic</a></li>
+    <li><a href="/designs/category/dipping-powder">Dipping-Powder</a></li>
+  </ul>
+
+  <h2>Designs</h2>
+  <% if (designs.length > 0) { %>
+    <ul>
+      <% designs.forEach(design => { %>
+        <li>
+          <a href="/designs/<%= design._id %>"><%= design.title %></a>
+          by <a href="/users/<%= design.author._id %>"><%= design.author.username %></a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No designs found in this category.</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
 </body>
 </html>
-

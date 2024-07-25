@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= user.username %>'s Profile</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+<div class="container">
+  <h1><%= user.username %>'s Profile</h1>
+  <h2>Following</h2>
+  <ul>
+    <% user.following.forEach(followedUser => { %>
+      <li><a href="/users/<%= followedUser._id %>"><%= followedUser.username %></a></li>
+    <% }) %>
+  </ul>
+  <h2>Designs</h2>
+  <ul>
+    <% designs.forEach(design => { %>
+      <li><a href="/designs/<%= design._id %>"><%= design.title %></a></li>
+    <% }) %>
+  </ul>
+  <div class="button-group">
+  <% if (currentUser && currentUser._id.toString() !== user._id.toString()) { %>
+    <% if (currentUser.following.some(followedUser => followedUser._id.toString() === user._id.toString())) { %>
+      <form action="/users/<%= user._id %>/unfollow" method="POST" style="display: inline;">
+        <button type="submit">Unfollow</button>
+      </form>
+    <% } else { %>
+      <form action="/users/<%= user._id %>/follow" method="POST" style="display: inline;">
+        <button type="submit">Follow</button>
+      </form>
+    <% } %>
+  <% } %>
+  <form action="/" method="GET" style="display: inline;">
+    <button type="submit">Back</button>
+  </form>
+ </div>
+</div>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

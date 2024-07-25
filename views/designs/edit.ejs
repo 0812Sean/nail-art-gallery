@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Design</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+<div class="container">
+  <h1>Edit Nail Art Design</h1>
+  <form action="/designs/<%= design._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <input type="text" name="design[title]" value="<%= design.title %>" required>
+    <textarea name="design[description]" required><%= design.description %></textarea>
+    <select name="design[category]" required>
+      <option value="">Select a category</option>
+      <option value="gel" <%= design.category === 'gel' ? 'selected' : '' %>>Gel</option>
+      <option value="acrylic" <%= design.category === 'acrylic' ? 'selected' : '' %>>Acrylic</option>
+      <option value="dipping-powder" <%= design.category === 'dipping-powder' ? 'selected' : '' %>>Dipping-Powder</option>
+    </select>
+    <input type="text" name="design[image]" value="<%= design.image %>" >
+    <p>OR</p>
+    <input type="file" name="image">
+    <button type="submit">Update</button>
+  </form>
+
+  <div class="button-group">
+    <a href="/designs/<%= design._id %>">Back</a>
+  </div>
+</div>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

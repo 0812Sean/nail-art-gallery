@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Design</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+  <h1>Create a New Nail Art Design</h1>
+  <form action="/designs" method="POST" enctype="multipart/form-data">
+    <input type="text" name="design[title]" placeholder="Title" required>
+    <textarea name="design[description]" placeholder="Description" required></textarea>
+    <select name="design[category]" required>
+      <option value="">Select a category</option>
+      <option value="gel">Gel</option>
+      <option value="acrylic">Acrylic</option>
+      <option value="dipping-powder">Dipping-Powder</option>
+    </select>
+    <input type="text" name="design[image]" placeholder="Image URL" >
+    <p>OR</p>
+    <input type="file" name="image">
+    <button type="submit">Create</button>
+  </form>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>
