@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+<div class="container">
+  <h1>Welcome to Nail Art Gallery</h1>
+  <div class="fade-container">
+    <% photos.forEach((photo, index) => { %>
+      <div class="fade-image" style="background-image: url('<%= photo.url %>');"></div>
+    <% }) %>
+  </div>
+  <br>
+  <a href="/login">Login</a> or <a href="/home">Go to Main Page</a>
+</div>
+
+<script>
+  let currentIndex = 0;
+  const images = document.getElementsByClassName('fade-image');
+
+  function showNextImage() {
+    images[currentIndex].classList.remove('visible');
+    currentIndex = (currentIndex + 1) % images.length;
+    images[currentIndex].classList.add('visible');
+  }
+
+  setInterval(showNextImage, 3000); 
+</script>
+
+<%- include('partials/footer') %>
+
+</body>
+</html>

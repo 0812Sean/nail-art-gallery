@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Nail Art Gallery</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <header>
     <h1>Nail Art Gallery</h1>
+    <a href="/">Home</a>
     <% if (currentUser) { %>
-      <a href="/">Home</a>
+      <a href="/home">Main Page</a>
       <a href="/designs/new">Create New Design</a>
       <a href="/users/logout">Logout</a>
     <% } else { %>
-      <a href="/">Home</a>
       <a href="/users/login">Login</a>
       <a href="/users/register">Register</a>
     <% } %>

@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
     const user = new User({ username, password });
     await user.save();
     req.session.userId = user._id;
-    res.redirect('/');
+    res.redirect('/home');
   } catch (e) {
     res.redirect('/users/register');
   }
@@ -39,9 +39,9 @@ router.post('/login', async (req, res) => {
   const user = await User.findOne({ username });
   if (user && await user.comparePassword(password)) {
     req.session.userId = user._id;
-    res.redirect('/');
+    res.redirect('/home');
   } else {
-    res.redirect('/users/login');
+    res.redirect('/login');
   }
 });
 

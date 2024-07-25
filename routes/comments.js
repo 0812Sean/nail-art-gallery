@@ -14,8 +14,8 @@ router.post('/:designId/comments', isLoggedIn, async (req, res) => {
     design.comments.push(comment);
     await design.save();
     res.redirect(`/designs/${design._id}`);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.log(error);
     res.redirect('/');
   }
 });
@@ -31,8 +31,8 @@ router.delete('/:designId/comments/:commentId', isLoggedIn, async (req, res) => 
     }
 
     res.redirect(`/designs/${designId}`);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.log(error);
     res.redirect('/');
   }
 });

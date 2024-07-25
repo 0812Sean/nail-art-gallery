@@ -54,7 +54,7 @@ router.put('/:id', isLoggedIn, async (req, res) => {
 // Delete Design
 router.delete('/:id', isLoggedIn, async (req, res) => {
   await Design.findByIdAndDelete(req.params.id);
-  res.redirect('/');
+  res.redirect('/home');
 });
 
 // Filter by Category
