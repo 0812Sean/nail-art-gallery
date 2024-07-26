@@ -3,14 +3,7 @@ const User = require('../models/user');
 const Design = require('../models/design');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-
-// Middleware
-const isLoggedIn = (req, res, next) => {
-  if (!req.session.userId) {
-    return res.redirect('/users/login');
-  }
-  next();
-};
+const { isLoggedIn } = require('../middleware');
 
 // Register
 router.get('/register', (req, res) => {
@@ -24,7 +17,8 @@ router.post('/register', async (req, res) => {
     await user.save();
     req.session.userId = user._id;
     res.redirect('/home');
-  } catch (e) {
+  } catch (error) {
+    console.log(error);
     res.redirect('/users/register');
   }
 });
@@ -35,12 +29,17 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = await User.findOne({ username });
-  if (user && await user.comparePassword(password)) {
-    req.session.userId = user._id;
-    res.redirect('/home');
-  } else {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    if (user && await user.comparePassword(password)) {
+      req.session.userId = user._id;
+      res.redirect('/home');
+    } else {
+      res.redirect('/login');
+    }
+  } catch (error) {
+    console.log(error);
     res.redirect('/login');
   }
 });
@@ -53,48 +52,49 @@ router.get('/logout', (req, res) => {
 
 // Follow User
 router.post('/:id/follow', isLoggedIn, async (req, res) => {
-    try {
-      const userToFollow = await User.findById(req.params.id);
-      const currentUser = await User.findById(req.session.userId);
-        if (!currentUser.following.includes(userToFollow._id)) {
-        currentUser.following.push(userToFollow._id);
-        await currentUser.save();
-      }
-  
-      res.redirect(`/users/${userToFollow._id}`);
-    } catch (e) {
-      console.error(e);
-      res.redirect('/');
+  try {
+    const userToFollow = await User.findById(req.params.id);
+    const currentUser = await User.findById(req.session.userId);
+    if (!currentUser.following.includes(userToFollow._id)) {
+      currentUser.following.push(userToFollow._id);
+      await currentUser.save();
     }
-  });
+    res.redirect(`/users/${userToFollow._id}`);
+  } catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
+});
 
-  // Unfollow User
+// Unfollow User
 router.post('/:id/unfollow', isLoggedIn, async (req, res) => {
   try {
     const userToUnfollow = await User.findById(req.params.id);
     const currentUser = await User.findById(req.session.userId);
-
     if (currentUser.following.includes(userToUnfollow._id)) {
       currentUser.following = currentUser.following.filter(
         (userId) => !userId.equals(userToUnfollow._id)
       );
       await currentUser.save();
     }
-
     res.redirect(`/users/${userToUnfollow._id}`);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.log(error);
     res.redirect('/');
   }
 });
 
 // View User Profile
 router.get('/:id', async (req, res) => {
-  const user = await User.findById(req.params.id).populate('following');
-  const designs = await Design.find({ author: user._id });
-  const currentUser = await User.findById(req.session.userId).populate('following');
-
-  res.render('users/profile', { user, designs, currentUser });
+  try {
+    const user = await User.findById(req.params.id).populate('following');
+    const designs = await Design.find({ author: user._id });
+    const currentUser = await User.findById(req.session.userId).populate('following');
+    res.render('users/profile', { user, designs, currentUser });
+  } catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
 });
 
 module.exports = router;

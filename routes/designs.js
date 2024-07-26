@@ -19,7 +19,7 @@ router.post('/', isLoggedIn, async (req, res) => {
     await newDesign.save();
     res.redirect(`/designs/${newDesign._id}`);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.redirect('/new');
   }
 });
@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
       });
     res.render('designs/show', { design });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.redirect('/');
   }
 });
@@ -46,7 +46,7 @@ router.get('/:id/edit', isLoggedIn, async (req, res) => {
     const design = await Design.findById(req.params.id);
     res.render('designs/edit', { design });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.redirect('/');
   }
 });
@@ -61,7 +61,7 @@ router.put('/:id', isLoggedIn, async (req, res) => {
     await design.save();
     res.redirect(`/designs/${design._id}`);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.redirect(`/designs/${req.params.id}/edit`);
   }
 });
@@ -72,7 +72,7 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
     await Design.findByIdAndDelete(req.params.id);
     res.redirect('/home');
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.redirect('/');
   }
 });
@@ -83,7 +83,7 @@ router.get('/category/:category', async (req, res) => {
     const designs = await Design.find({ category: req.params.category }).populate('author');
     res.render('index', { designs });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.redirect('/');
   }
 });
