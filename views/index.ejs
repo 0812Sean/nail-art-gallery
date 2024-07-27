@@ -8,26 +8,20 @@
 <%- include('partials/header') %>
 
 <div class="container">
-  <!-- <h1>Welcome, 
-    <% if (currentUser) { %>
-      <%= currentUser.username %>
+  <div class="design-list">
+    <% if (designs.length > 0) { %>
+      <% designs.forEach(design => { %>
+        <div class="design">
+          <img src="<%= design.image %>" alt="<%= design.title %>">
+          <a href="/designs/<%= design._id %>">View Details</a>
+        </div>
+      <% }) %>
+      <% for (let i = 0; i < (3 - designs.length % 3) % 3; i++) { %>
+        <div class="design placeholder"></div>
+      <% } %>
     <% } else { %>
-      Guest
-    <% } %> -->
-   <!-- </h1>   -->
-   <div class="gallery">
-    <% designs.forEach(design => { %>
-      <div class="design">
-        <h2><%= design.title %></h2>
-        <img src="<%= design.image %>" alt="<%= design.title %>">
-        <p>Category: <%= design.category %></p>
-        <p>By: <a href="/users/<%= design.author._id %>"><%= design.author.username %></a></p>
-        <a href="/designs/<%= design._id %>">View Details</a>
-      </div>
-    <% }) %>
-  </div>
-</div>
-
+      <p>No designs available in this category.</p>
+    <% } %>
 
 <%- include('partials/footer') %>
 

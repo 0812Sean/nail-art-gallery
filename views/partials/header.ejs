@@ -9,8 +9,16 @@
   <header>
     <nav>
         <a href="/">Home</a>
-        <a href="/home">Gallery</a>
-        <span>Nail Art Gallery</span>
+        <div class="dropdown">
+          <a class="dropbtn" href="/home">Gallery</a>
+          <div class="dropdown-content">
+            <a href="/designs/category/gel">Gel</a>
+            <a href="/designs/category/acrylic">Acrylic</a>
+            <a href="/designs/category/dipping-powder">Dipping-Powder</a>
+            <a href="/home">All</a>
+          </div>
+        </div>       
+         <span>Nail Art Gallery</span>
         <% if (currentUser) { %>
             <a href="/designs/new">Create New Design</a>
             <a href="/users/logout">Logout</a>

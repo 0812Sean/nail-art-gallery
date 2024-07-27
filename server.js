@@ -22,10 +22,8 @@ mongoose.connection.on('connected', () => {
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static('public'));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.use(
   session({
@@ -55,7 +53,6 @@ app.use('/', indexRoutes);
 app.use('/users', userRoutes);
 app.use('/designs', designRoutes);  
 app.use('/designs', commentRoutes); 
-
 
 app.listen(port, () => {
     console.log(`The express app is ready on port ${port}!`);

@@ -6,8 +6,6 @@
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
-<!-- <%- include('partials/header') %> -->
-
 <body class="overflow">
     <header>
         <nav>
@@ -62,7 +60,7 @@
 
             preloadImages(images).then(() => {
                 images[0].classList.add('visible');
-                setInterval(showNextImage, 3000); // Change image every 3 seconds
+                setInterval(showNextImage, 3000);
             }).catch(err => {
                 console.error("Error loading images", err);
             });
