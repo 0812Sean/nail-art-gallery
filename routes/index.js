@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 router.get('/home', async (req, res) => {
   try {
     const designs = await Design.find({}).populate('author');
-    res.render('index', { designs });
+    res.render('index', { designs, });
   } catch (error) {
     console.log(error);
     res.redirect('/');

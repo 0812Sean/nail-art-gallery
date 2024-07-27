@@ -11,10 +11,12 @@
   <h1><%= design.title %></h1>
   <p><%= design.description %></p>
   <p>Category: <%= design.category %></p>
-  <img src="<%= design.image %>" alt="<%= design.title %>">
+  <div class="image-container">
+    <img src="<%= design.image %>" alt="<%= design.title %>">
+  </div>
   <p>By: <a href="/users/<%= design.author._id %>"><%= design.author.username %></a></p>
   
-  <div class="button-group">
+  <div class="button-group center-buttons">
     <% if (currentUser && currentUser == design.author._id.toString()) { %>
       <form action="/designs/<%= design._id %>/edit" method="GET" style="display: inline;">
         <button type="submit">Edit</button>
@@ -29,19 +31,17 @@
   </div>
 
   <h2>Comments</h2>
-  <ul>
+  <ul class="comments-list">
     <% design.comments.forEach(comment => { %>
-      <li>
+      <li class="comment-box">
         <p><%= comment.text %></p>
         <p>By: <a href="/users/<%= comment.author._id %>"><%= comment.author.username %></a></p>
-        <div class="button-group">
-            <% if (currentUser && currentUser == comment.author._id.toString()) { %>
+        <% if (currentUser && currentUser == comment.author._id.toString()) { %>
           <form action="/designs/<%= design._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" style="display: inline;">
             <button type="submit">Delete</button>
           </form>
-        </div>
         <% } %>  
-    </li>
+      </li>
     <% }) %>
   </ul>
 

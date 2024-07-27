@@ -6,34 +6,69 @@
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
-<body>
-    <%- include('partials/header') %>
+<!-- <%- include('partials/header') %> -->
 
-<div class="container">
-  <h1>Welcome to Nail Art Gallery</h1>
-  <div class="fade-container">
-    <% photos.forEach((photo, index) => { %>
-      <div class="fade-image" style="background-image: url('<%= photo.url %>');"></div>
-    <% }) %>
-  </div>
-  <br>
-  <a href="/login">Login</a> or <a href="/home">Go to Main Page</a>
-</div>
+<body class="overflow">
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/home">Gallery</a>
+            <span>Nail Art Gallery</span>
+            <% if (currentUser) { %>
+                <a href="/designs/new">Create New Design</a>
+                <a href="/users/logout">Logout</a>
+            <% } else { %>
+                <a href="/users/login">Login</a>
+                <a href="/users/register">Register</a>
+            <% } %>
+        </nav>
+    </header>
 
-<script>
-  let currentIndex = 0;
-  const images = document.getElementsByClassName('fade-image');
+    <div class="fade-container">
+        <% photos.forEach((photo, index) => { %>
+            <div class="fade-image" style="background-image: url('<%= photo.url %>');"></div>
+        <% }) %>
+    </div>
+    <div class="homepage">
+        <h1>Welcome to Nail Art Gallery</h1>
+        <div class="buttons">
+            <button><a href="/login">Login</a></button>
+            <button><a href="/home">Gallery</a></button>
+        </div>
+    </div>
 
-  function showNextImage() {
-    images[currentIndex].classList.remove('visible');
-    currentIndex = (currentIndex + 1) % images.length;
-    images[currentIndex].classList.add('visible');
-  }
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentIndex = 0;
+            const images = document.getElementsByClassName('fade-image');
 
-  setInterval(showNextImage, 3000); 
-</script>
+            function preloadImages(imageElements) {
+                return Promise.all([...imageElements].map(img => {
+                    return new Promise((resolve, reject) => {
+                        const src = img.style.backgroundImage.slice(5, -2);
+                        const image = new Image();
+                        image.src = src;
+                        image.onload = resolve;
+                        image.onerror = reject;
+                    });
+                }));
+            }
 
-<%- include('partials/footer') %>
+            function showNextImage() {
+                images[currentIndex].classList.remove('visible');
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].classList.add('visible');
+            }
 
+            preloadImages(images).then(() => {
+                images[0].classList.add('visible');
+                setInterval(showNextImage, 3000); // Change image every 3 seconds
+            }).catch(err => {
+                console.error("Error loading images", err);
+            });
+        });
+    </script>
+
+    <%- include('partials/footer') %>
 </body>
 </html>

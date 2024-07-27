@@ -7,15 +7,17 @@
 </head>
 <body>
   <header>
-    <h1>Nail Art Gallery</h1>
-    <a href="/">Home</a>
-    <% if (currentUser) { %>
-      <a href="/home">Main Page</a>
-      <a href="/designs/new">Create New Design</a>
-      <a href="/users/logout">Logout</a>
-    <% } else { %>
-      <a href="/users/login">Login</a>
-      <a href="/users/register">Register</a>
-    <% } %>
-  </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/home">Gallery</a>
+        <span>Nail Art Gallery</span>
+        <% if (currentUser) { %>
+            <a href="/designs/new">Create New Design</a>
+            <a href="/users/logout">Logout</a>
+        <% } else { %>
+            <a href="/users/login">Login</a>
+            <a href="/users/register">Register</a>
+        <% } %>
+    </nav>
+</header>
   <div class="container">

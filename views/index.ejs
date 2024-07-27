@@ -8,8 +8,14 @@
 <%- include('partials/header') %>
 
 <div class="container">
-  <h1>Welcome, <%= currentUser ? currentUser.username : 'Guest' %></h1>
-  <div class="gallery">
+  <!-- <h1>Welcome, 
+    <% if (currentUser) { %>
+      <%= currentUser.username %>
+    <% } else { %>
+      Guest
+    <% } %> -->
+   <!-- </h1>   -->
+   <div class="gallery">
     <% designs.forEach(design => { %>
       <div class="design">
         <h2><%= design.title %></h2>
@@ -21,6 +27,7 @@
     <% }) %>
   </div>
 </div>
+
 
 <%- include('partials/footer') %>
 
