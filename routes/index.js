@@ -8,6 +8,9 @@ router.get('/', (req, res) => {
     { url: '/images/photo1.jpg', title: 'Photo 1' },
     { url: '/images/photo2.jpg', title: 'Photo 2' },
     { url: '/images/photo3.jpg', title: 'Photo 3' },
+    { url: '/images/photo4.jpg', title: 'Photo 4' },
+    { url: '/images/photo5.jpg', title: 'Photo 5' },
+    { url: '/images/photo6.jpg', title: 'Photo 6' },
   ];
   res.render('home', { photos });
 });
